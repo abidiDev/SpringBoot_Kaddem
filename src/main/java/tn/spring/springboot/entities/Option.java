@@ -4,5 +4,5 @@ public enum Option {
     GAMIX,
     SE,
     SIM,
-    NIOS
+    NIDS
 }
