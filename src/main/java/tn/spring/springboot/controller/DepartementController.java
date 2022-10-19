@@ -1,5 +1,6 @@
 package tn.spring.springboot.controller;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.spring.springboot.entities.Departement;
@@ -9,8 +10,9 @@ import java.util.List;
 
 @RequestMapping("departement")
 @RestController
+@AllArgsConstructor
+
 public class DepartementController {
-    @Autowired
     IDepartement iDepartement;
     @GetMapping("/getAll")
     public List<Departement> getAllDepartements(){

@@ -1,5 +1,7 @@
 package tn.spring.springboot.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,6 +15,8 @@ import java.util.Set;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = {"attributeOfTypeList", "attributeOfTypeSet"})
+
 public class Equipe implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +25,11 @@ private String nomEquipe;
     @Enumerated(EnumType.STRING)
 private Niveau niveau;
     @OneToOne
+    @JsonIgnore
+
     private DetailEquipe detailEquipe;
     @ManyToMany(mappedBy = "equipe")
+    @JsonIgnore
+
     private Set<Etudiant> etudiant;
 }

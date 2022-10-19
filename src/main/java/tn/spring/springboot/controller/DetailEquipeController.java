@@ -1,5 +1,6 @@
 package tn.spring.springboot.controller;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.spring.springboot.entities.DetailEquipe;
@@ -9,8 +10,9 @@ import java.util.List;
 
 @RequestMapping("detailEquipe")
 @RestController
+@AllArgsConstructor
+
 public class DetailEquipeController {
-    @Autowired
     IDetailEquipe iDetailEquipe;
     @GetMapping("/getAll")
     public List<DetailEquipe> getAllDetailEquipes(){
@@ -32,8 +34,14 @@ public class DetailEquipeController {
     public void getDetailEquipe(@PathVariable Integer id) {
         iDetailEquipe.deleteDetailDetailEquipe(id);
     }
-    @GetMapping("get/{id}")
+    @GetMapping("/get/{id}")
     public DetailEquipe getDetailEquipeById(@PathVariable Integer id){
         return iDetailEquipe.getDetailEquipeById(id);
+    }
+
+    @GetMapping("/findBythematique/{thematique}")
+
+    public List<DetailEquipe> getByDetailEquipeThematique (@PathVariable("thematique") String thematique){
+        return iDetailEquipe.findByThematiqueLike(thematique);
     }
 }

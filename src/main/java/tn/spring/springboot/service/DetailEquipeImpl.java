@@ -1,5 +1,6 @@
 package tn.spring.springboot.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.spring.springboot.entities.DetailEquipe;
@@ -7,8 +8,9 @@ import tn.spring.springboot.repository.DetailEquipeRepository;
 
 import java.util.List;
 @Service
+@AllArgsConstructor
+
 public class DetailEquipeImpl implements IDetailEquipe{
-    @Autowired
     DetailEquipeRepository detailEquipeRepository;
     @Override
     public List<DetailEquipe> getAllDetailEquipes() {
@@ -35,4 +37,11 @@ public class DetailEquipeImpl implements IDetailEquipe{
     public DetailEquipe getDetailEquipeById(Integer id) {
         return detailEquipeRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public List<DetailEquipe> findByThematiqueLike(String thematique) {
+        return detailEquipeRepository.findByThematiqueLike(thematique);
+    }
+
+
 }

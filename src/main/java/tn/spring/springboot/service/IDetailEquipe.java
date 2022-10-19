@@ -11,4 +11,6 @@ public interface IDetailEquipe {
     public DetailEquipe updateDetailEquipe(DetailEquipe e);
     public void deleteDetailDetailEquipe(Integer id);
     public DetailEquipe getDetailEquipeById(Integer id);
+    List<DetailEquipe> findByThematiqueLike (String thematique);
+
 }

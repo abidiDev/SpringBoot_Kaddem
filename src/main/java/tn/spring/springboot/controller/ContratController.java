@@ -1,5 +1,6 @@
 package tn.spring.springboot.controller;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.spring.springboot.entities.Contrat;
@@ -9,8 +10,9 @@ import java.util.List;
 
 @RequestMapping("contrat")
 @RestController
+@AllArgsConstructor
+
 public class ContratController {
-    @Autowired
     IContrat iContrat;
 
     @GetMapping("/getAll")

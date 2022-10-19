@@ -11,4 +11,6 @@ public interface IEtudiantService {
     public Etudiant updateEtudiant(Etudiant e);
     public void deleteEtudiant(Long id);
     public Etudiant getEtudiantById(Long id);
+
+    public Etudiant findEtudiantByPrenomEContains(String prenom);
 }

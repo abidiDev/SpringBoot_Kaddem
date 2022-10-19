@@ -1,4 +1,5 @@
 package tn.spring.springboot.controller;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.spring.springboot.entities.Equipe;
@@ -8,8 +9,9 @@ import java.util.List;
 
 @RequestMapping("equipe")
 @RestController
+@AllArgsConstructor
+
 public class EquipeController {
-    @Autowired
      IEquipeService iEquipeService;
     @GetMapping("/getAll")
     public List<Equipe> getAllEquipes(){
@@ -35,4 +37,19 @@ public class EquipeController {
     public Equipe getEquipeById(@PathVariable Integer id){
         return iEquipeService.getEquipeById(id);
     }
-}
+    @GetMapping("getByEtudiantId/{idEtudiant}")
+
+    public List<Equipe> findEquipeByEtudiantIdEtudiant(@PathVariable Long idEtudiant){
+        return iEquipeService.findEquipeByEtudiantIdEtudiant(idEtudiant);
+    }
+    @GetMapping("getByEtudiantIdEtudiantAndDetailEquipeThematiqueNotNull/{idEtudiant}")
+
+    public List<Equipe> findByEtudiantIdEtudiantAndDetailEquipeThematiqueNotNull (@PathVariable Long idEtudiant){
+        return  iEquipeService.findByEtudiantIdEtudiantAndDetailEquipeThematiqueNotNull(idEtudiant);
+    }
+    @GetMapping("getByEtudiantIdEtudiantAndEtudiantDepartementIdDepart/{idEtudiant}/{idDepart}")
+
+    public List<Equipe> findByEtudiantIdEtudiantAndEtudiantDepartementIdDepart( @PathVariable Long idEtudiant, @PathVariable Integer idDepart) {
+       return iEquipeService.findByEtudiantIdEtudiantAndEtudiantDepartementIdDepart(idEtudiant, idDepart);
+    }
+    }

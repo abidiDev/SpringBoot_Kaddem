@@ -1,5 +1,6 @@
 package tn.spring.springboot.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.spring.springboot.entities.Etudiant;
@@ -9,9 +10,10 @@ import java.util.List;
 
 //c'est une annotation qui permet spring d'instancier cette classe pour gérer le cycle de vie de l'app
 @Service
+@AllArgsConstructor
+
 public class EtudiantServiceImp implements IEtudiantService{
     //injection du repository dans sercice
-    @Autowired
     EtudiantRepository etudiantRepository;
     @Override
     public List<Etudiant> getAllEtudiants() {
@@ -37,5 +39,10 @@ public class EtudiantServiceImp implements IEtudiantService{
     @Override
     public Etudiant getEtudiantById(Long id) {
         return etudiantRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Etudiant findEtudiantByPrenomEContains(String prenom) {
+        return etudiantRepository.findEtudiantByPrenomEContains(prenom);
     }
 }

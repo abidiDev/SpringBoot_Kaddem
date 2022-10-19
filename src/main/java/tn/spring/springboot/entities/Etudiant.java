@@ -1,5 +1,7 @@
 package tn.spring.springboot.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,7 +17,9 @@ import java.util.Set;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = {"attributeOfTypeList", "attributeOfTypeSet"})
 public class Etudiant implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idEtudiant")
@@ -25,10 +29,16 @@ public class Etudiant implements Serializable {
     @Enumerated(EnumType.STRING)
     private Option option;
     @ManyToOne
+    @JsonIgnore
+
     private Departement departement;
     @ManyToMany
+    @JsonIgnore
+
     private Set<Equipe> equipe;
 
     @OneToMany(mappedBy = "etudiant")
+    @JsonIgnore
+
     private Set<Contrat> contrat;
 }

@@ -1,5 +1,6 @@
 package tn.spring.springboot.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.spring.springboot.entities.Departement;
@@ -8,8 +9,9 @@ import tn.spring.springboot.repository.IDepartementRepository;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
+
 public class DepartementImpl implements IDepartement{
-    @Autowired
     IDepartementRepository departementRepository;
     @Override
     public List<Departement> getAllDepartements() {
