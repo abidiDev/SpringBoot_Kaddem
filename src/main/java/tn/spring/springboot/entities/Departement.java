@@ -14,7 +14,6 @@ import java.util.Set;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"attributeOfTypeList", "attributeOfTypeSet"})
 
 public class Departement implements Serializable {
     @Id
@@ -25,8 +24,5 @@ public class Departement implements Serializable {
     @JsonIgnore
 
     private Set<Etudiant> etudiants;
-    @ManyToOne
-    @JsonIgnore
-
-    private Etudiant etudiant;
+   
 }

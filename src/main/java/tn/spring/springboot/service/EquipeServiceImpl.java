@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.spring.springboot.entities.Equipe;
 import tn.spring.springboot.entities.Etudiant;
+import tn.spring.springboot.entities.Niveau;
 import tn.spring.springboot.repository.EquipeRepository;
 import tn.spring.springboot.repository.EtudiantRepository;
 
@@ -54,5 +55,15 @@ public class EquipeServiceImpl implements IEquipeService{
     @Override
     public List<Equipe> findByEtudiantIdEtudiantAndEtudiantDepartementIdDepart(Long idEtudiant, Integer idDepart) {
         return equipeRepository.findByEtudiantIdEtudiantAndEtudiantDepartementIdDepart(idEtudiant,idDepart);
+    }
+
+    @Override
+    public List<Equipe> retriveEquipeByNiveauAndThematique(Niveau niveau, String thematique) {
+        return equipeRepository.retriveEquipeByNiveauAndThematique(niveau,thematique);
+    }
+
+    @Override
+    public void deleteEquipeByNiveau(Niveau niveau) {
+        equipeRepository.deleteEquipeByNiveau(niveau);
     }
 }

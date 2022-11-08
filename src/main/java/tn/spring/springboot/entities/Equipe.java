@@ -28,7 +28,7 @@ private Niveau niveau;
     @JsonIgnore
 
     private DetailEquipe detailEquipe;
-    @ManyToMany(mappedBy = "equipe")
+    @ManyToMany
     @JsonIgnore
 
     private Set<Etudiant> etudiant;

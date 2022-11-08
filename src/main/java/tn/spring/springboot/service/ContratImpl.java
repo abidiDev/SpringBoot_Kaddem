@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.spring.springboot.entities.Contrat;
+import tn.spring.springboot.entities.Etudiant;
 import tn.spring.springboot.repository.ContratRepository;
+import tn.spring.springboot.repository.EtudiantRepository;
 
 import java.util.List;
 
@@ -13,6 +15,7 @@ import java.util.List;
 
 public class ContratImpl implements IContrat{
     ContratRepository contratRepository;
+    EtudiantRepository etudiantRepository;
     @Override
     public List<Contrat> getAllContrats() {
         return contratRepository.findAll();
@@ -37,4 +40,6 @@ public class ContratImpl implements IContrat{
     public Contrat getContratById(Integer id) {
         return contratRepository.findById(id).orElse(null);
     }
+
+
 }

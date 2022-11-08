@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.spring.springboot.entities.Departement;
+import tn.spring.springboot.entities.Option;
 import tn.spring.springboot.service.IDepartement;
 
 import java.util.List;
@@ -38,5 +39,12 @@ public class DepartementController {
     public Departement getDepartementById(@PathVariable Integer id){
         return iDepartement.getDepartementById(id);
     }
+
+    @GetMapping("getByOptionE/{op}")
+
+    List<Departement> retrieveDepartementByOptionEtudiant(@PathVariable Option op){
+        return  iDepartement.retrieveDepartementByOptionEtudiant(op);
+    }
+
 
 }

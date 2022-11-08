@@ -3,6 +3,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.spring.springboot.entities.Equipe;
+import tn.spring.springboot.entities.Niveau;
 import tn.spring.springboot.service.IEquipeService;
 
 import java.util.List;
@@ -51,5 +52,15 @@ public class EquipeController {
 
     public List<Equipe> findByEtudiantIdEtudiantAndEtudiantDepartementIdDepart( @PathVariable Long idEtudiant, @PathVariable Integer idDepart) {
        return iEquipeService.findByEtudiantIdEtudiantAndEtudiantDepartementIdDepart(idEtudiant, idDepart);
+    }
+
+    @GetMapping("getByNiveauThematique/{niveau}/{thematique}")
+    public List<Equipe> retriveEquipeByNiveauAndThematique(@PathVariable Niveau niveau,@PathVariable String thematique) {
+        return iEquipeService.retriveEquipeByNiveauAndThematique(niveau,thematique);
+    }
+    @DeleteMapping("deleteEquipeByNiveau/{niveau}")
+
+    public void deleteEquipeByNiveau(@PathVariable Niveau niveau) {
+        iEquipeService.deleteEquipeByNiveau(niveau);
     }
     }

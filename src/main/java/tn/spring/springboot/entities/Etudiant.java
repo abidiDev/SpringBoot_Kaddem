@@ -17,7 +17,6 @@ import java.util.Set;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"attributeOfTypeList", "attributeOfTypeSet"})
 public class Etudiant implements Serializable {
 
     @Id
@@ -29,11 +28,9 @@ public class Etudiant implements Serializable {
     @Enumerated(EnumType.STRING)
     private Option option;
     @ManyToOne
-    @JsonIgnore
 
     private Departement departement;
-    @ManyToMany
-    @JsonIgnore
+    @ManyToMany(mappedBy = "etudiant")
 
     private Set<Equipe> equipe;
 

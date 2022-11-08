@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.spring.springboot.entities.Etudiant;
+import tn.spring.springboot.entities.Option;
 import tn.spring.springboot.service.IEtudiantService;
 
 import java.util.List;
@@ -45,4 +46,19 @@ public class EtudiantController {
     public Etudiant findEtudiantByPrenomEContains(@PathVariable String prenom){
        return iEtudiantService.findEtudiantByPrenomEContains(prenom);
     }
-}
+
+    @PutMapping("updateByOption/{op}/{idEtudiant}")
+    public void updateEtudiantByOption(@PathVariable Option op, @PathVariable Long idEtudiant) {
+        iEtudiantService.updateEtudiantByOption(op, idEtudiant);
+    }
+
+    @PutMapping("assignEtudiantToDepartement/{idEtudiant}/{idDepartement}")
+    public void assignEtudiantToDepartement(@PathVariable Long idEtudiant,@PathVariable int idDepartement){
+        iEtudiantService.assignEtudiantToDepartement(idEtudiant,idDepartement);
+    }
+
+    @PostMapping("addAndAssignEtudiantToEquipeAndContract/{idContrat}/{idEquipe}")
+    public Etudiant addAndAssignEtudiantToEquipeAndContract(@RequestBody Etudiant e, @PathVariable  Integer idContrat,@PathVariable Integer idEquipe) {
+        return iEtudiantService.addAndAssignEtudiantToEquipeAndContract(e,idContrat,idEquipe);
+    }
+    }

@@ -1,10 +1,10 @@
 package tn.spring.springboot.service;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.spring.springboot.entities.Departement;
-import tn.spring.springboot.repository.IDepartementRepository;
+import tn.spring.springboot.entities.Option;
+import tn.spring.springboot.repository.DepartementRepository;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 
 public class DepartementImpl implements IDepartement{
-    IDepartementRepository departementRepository;
+    DepartementRepository departementRepository;
     @Override
     public List<Departement> getAllDepartements() {
         return departementRepository.findAll();
@@ -36,5 +36,10 @@ public class DepartementImpl implements IDepartement{
     @Override
     public Departement getDepartementById(Integer id) {
         return departementRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Departement> retrieveDepartementByOptionEtudiant(Option op) {
+        return departementRepository.retrieveDepartementByOptionEtudiant(op);
     }
 }
