@@ -31,4 +31,5 @@ public class Contrat implements Serializable {
     @JsonIgnore
 
     Etudiant etudiant;
+    private int montantContrat;
 }

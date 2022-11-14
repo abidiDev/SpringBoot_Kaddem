@@ -31,6 +31,7 @@ public class Etudiant implements Serializable {
 
     private Departement departement;
     @ManyToMany(mappedBy = "etudiant")
+    @JsonIgnore
 
     private Set<Equipe> equipe;
 

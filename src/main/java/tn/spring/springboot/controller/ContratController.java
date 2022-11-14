@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import tn.spring.springboot.entities.Contrat;
 import tn.spring.springboot.service.IContrat;
 
+import java.util.Date;
 import java.util.List;
 
 @RequestMapping("contrat")
@@ -40,5 +41,16 @@ public class ContratController {
         return iContrat.getContratById(id);
     }
 
+    @PostMapping("/affectContratToEtudiant/{nomE}/{prenomE}")
+    @ResponseBody
+    public Contrat affectContratToEtudiant(  @RequestBody Contrat ce,@PathVariable String nomE,@PathVariable String prenomE) {
+        return  iContrat.affectContratToEtudiant(ce,nomE,prenomE);
+    }
 
-}
+    @GetMapping("getChiffreAffaireEntreDeuxDate/{startDate}/{endDate}")
+
+    public List<Contrat> getChiffreAffaireEntreDeuxDate(@PathVariable Date startDate,@PathVariable Date endDate){
+        return iContrat.getChiffreAffaireEntreDeuxDate(startDate,endDate);
+    }
+
+    }

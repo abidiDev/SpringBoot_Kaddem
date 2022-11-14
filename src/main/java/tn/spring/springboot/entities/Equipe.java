@@ -29,7 +29,6 @@ private Niveau niveau;
 
     private DetailEquipe detailEquipe;
     @ManyToMany
-    @JsonIgnore
 
     private Set<Etudiant> etudiant;
 }

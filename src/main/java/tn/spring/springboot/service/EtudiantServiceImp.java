@@ -77,4 +77,9 @@ public class EtudiantServiceImp implements IEtudiantService{
         equipeRepository.save(equipe);
         return e;
     }
+
+    @Override
+    public List<Etudiant> getEtudiantsByDepartement(Integer idDepartement) {
+        return etudiantRepository.findEtudiantByDepartement(departementRepository.findById(idDepartement).orElse(null));
+    }
 }

@@ -17,4 +17,5 @@ public interface IEtudiantService {
     public     void updateEtudiantByOption(Option op , Long idEtudiant);
     public void assignEtudiantToDepartement(Long idEtudiant,int idDepartement);
     public Etudiant addAndAssignEtudiantToEquipeAndContract(Etudiant e, Integer idContrat, Integer idEquipe);
+    public List<Etudiant> getEtudiantsByDepartement (Integer idDepartement);
 }
