@@ -8,6 +8,10 @@ import tn.spring.springboot.entities.Etudiant;
 import tn.spring.springboot.repository.ContratRepository;
 import tn.spring.springboot.repository.EtudiantRepository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.*;
 
 @Service
@@ -16,6 +20,8 @@ import java.util.*;
 public class ContratImpl implements IContrat {
     ContratRepository contratRepository;
     EtudiantRepository etudiantRepository;
+
+
 
     @Override
     public List<Contrat> getAllContrats() {
@@ -62,17 +68,26 @@ public class ContratImpl implements IContrat {
         return ce;
     }
 
-    public List<Contrat> getChiffreAffaireEntreDeuxDate(Date startDate, Date endDate) {
+    public List<String> getChiffreAffaireEntreDeuxDate(Date startDate, Date endDate) {
         List<Contrat> contrats = contratRepository.ListContratBetweenToDate(startDate, endDate);
-        /*
+
         int ia=0,cloud=0,resau=0,securite=0;
+
         for (Contrat c: contrats) {
 
             switch (c.getSpecialite()){
                 case IA: ia=ia+1;
+                    break;
+
                 case CLOUD:cloud=cloud+1;
+                    break;
+
                 case RESAU:resau=resau+1;
+                    break;
+
                 case SECURITE:securite=securite+1;
+                    break;
+
             }
         }
         List<String> result=new ArrayList<String>();
@@ -84,9 +99,40 @@ public class ContratImpl implements IContrat {
 
 
     }
-  */
-        return contrats;
+    public Integer nbContratsValides(Date startDate, Date endDate)
+    {
+        return contratRepository.ListContratBetweenToDate(startDate, endDate).size();
+
     }
+
+    @Override
+    public List<String> retrieveAndUpdateStatusContrat() {
+        List<Contrat> contrats=contratRepository.findAll();
+        List<Contrat> contratsToRenew=new ArrayList<Contrat>();
+        List<String> messages=new ArrayList<String>();
+        Date todayDate = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        for (Contrat c: contrats) {
+
+
+
+            if ( (todayDate.getTime()-c.getDateFinContrat().getTime())/(1000*60*60*24) <15){
+
+                contratsToRenew.add(c);
+                c.setArchive(true);
+                contratRepository.save(c);
+            }
+
+        }
+
+        for (Contrat c: contratsToRenew) {
+            messages.add("Bonjour "+c.getEtudiant().getNomE()+" "+c.getEtudiant().getPrenomE()+" étudiant dans la spécialité "+c.getSpecialite()+" votre contrat expirera le  "+ c.getDateFinContrat()+" merci de consulter l'adminstration" );
+        }
+
+            return messages;
+    }
+
+
 }
 
 

@@ -18,5 +18,6 @@ public interface IEquipeService {
     public List<Equipe> findByEtudiantIdEtudiantAndEtudiantDepartementIdDepart (Long idEtudiant, Integer idDepart);
     public List<Equipe> retriveEquipeByNiveauAndThematique(Niveau niveau , String thematique);
     public  void deleteEquipeByNiveau( Niveau niveau);
+    public int faireEvoluerEquipes();
 
 }

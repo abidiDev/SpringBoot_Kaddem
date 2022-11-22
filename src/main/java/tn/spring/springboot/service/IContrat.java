@@ -13,5 +13,7 @@ public interface IContrat {
     public void deleteDetailContrat(Integer id);
     public Contrat getContratById(Integer id);
     public Contrat affectContratToEtudiant (Contrat ce, String nomE,String prenomE);
-    public List<Contrat>  getChiffreAffaireEntreDeuxDate(Date startDate, Date endDate);
+    public List<String>  getChiffreAffaireEntreDeuxDate(Date startDate, Date endDate);
+    public Integer nbContratsValides(Date startDate, Date endDate);
+    public List<String> retrieveAndUpdateStatusContrat();
 }

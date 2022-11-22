@@ -2,6 +2,7 @@ package tn.spring.springboot.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import tn.spring.springboot.entities.Contrat;
 import tn.spring.springboot.service.IContrat;
@@ -49,8 +50,20 @@ public class ContratController {
 
     @GetMapping("getChiffreAffaireEntreDeuxDate/{startDate}/{endDate}")
 
-    public List<Contrat> getChiffreAffaireEntreDeuxDate(@PathVariable Date startDate,@PathVariable Date endDate){
+    public List<String> getChiffreAffaireEntreDeuxDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
+                                                        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable  Date endDate){
         return iContrat.getChiffreAffaireEntreDeuxDate(startDate,endDate);
     }
 
+    @GetMapping("nbContratsValides/{startDate}/{endDate}")
+
+    public Integer  nbContratsValides(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
+                                                       @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable  Date endDate){
+        return iContrat.nbContratsValides(startDate,endDate);
+    }
+    @GetMapping("retrieveAndUpdateStatusContrat")
+
+    public List<String> retrieveAndUpdateStatusContrat() {
+        return iContrat.retrieveAndUpdateStatusContrat();
+    }
     }
