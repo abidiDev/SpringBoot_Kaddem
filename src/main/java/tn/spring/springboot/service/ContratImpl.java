@@ -1,7 +1,10 @@
 package tn.spring.springboot.service;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import tn.spring.springboot.entities.Contrat;
 import tn.spring.springboot.entities.Etudiant;
@@ -16,8 +19,11 @@ import java.util.*;
 
 @Service
 @AllArgsConstructor
+@Getter
 
 public class ContratImpl implements IContrat {
+    public static List<String> messages=new ArrayList<String>();
+
     ContratRepository contratRepository;
     EtudiantRepository etudiantRepository;
 
@@ -106,17 +112,18 @@ public class ContratImpl implements IContrat {
     }
 
     @Override
-    public List<String> retrieveAndUpdateStatusContrat() {
+    @Scheduled(cron = "* * 13 * * *")
+    public void retrieveAndUpdateStatusContrat() {
+        messages=new ArrayList<String>();
         List<Contrat> contrats=contratRepository.findAll();
         List<Contrat> contratsToRenew=new ArrayList<Contrat>();
-        List<String> messages=new ArrayList<String>();
         Date todayDate = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
 
         for (Contrat c: contrats) {
 
 
 
-            if ( (todayDate.getTime()-c.getDateFinContrat().getTime())/(1000*60*60*24) <15){
+            if ( (todayDate.getTime()-c.getDateFinContrat().getTime())/(1000*60*60*24) <15 && (c.getDateFinContrat().getTime()-todayDate.getTime())/(1000*60*60*24) >0){
 
                 contratsToRenew.add(c);
                 c.setArchive(true);
@@ -129,7 +136,6 @@ public class ContratImpl implements IContrat {
             messages.add("Bonjour "+c.getEtudiant().getNomE()+" "+c.getEtudiant().getPrenomE()+" étudiant dans la spécialité "+c.getSpecialite()+" votre contrat expirera le  "+ c.getDateFinContrat()+" merci de consulter l'adminstration" );
         }
 
-            return messages;
     }
 
 

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import tn.spring.springboot.entities.Contrat;
+import tn.spring.springboot.service.ContratImpl;
 import tn.spring.springboot.service.IContrat;
 
 import java.util.Date;
@@ -64,6 +65,7 @@ public class ContratController {
     @GetMapping("retrieveAndUpdateStatusContrat")
 
     public List<String> retrieveAndUpdateStatusContrat() {
-        return iContrat.retrieveAndUpdateStatusContrat();
+        iContrat.retrieveAndUpdateStatusContrat();
+        return  ContratImpl.messages;
     }
     }

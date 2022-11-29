@@ -66,7 +66,7 @@ public class EquipeController {
 
     @GetMapping("faireEvoluerEquipes")
 
-    public int faireEvoluerEquipes() {
-       return   iEquipeService.faireEvoluerEquipes();
+    public void faireEvoluerEquipes() {
+         iEquipeService.faireEvoluerEquipes();
     }
     }

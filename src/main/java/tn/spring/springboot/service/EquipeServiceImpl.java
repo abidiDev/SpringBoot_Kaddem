@@ -10,14 +10,11 @@ import tn.spring.springboot.entities.Niveau;
 import tn.spring.springboot.repository.EquipeRepository;
 import tn.spring.springboot.repository.EtudiantRepository;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
-import static tn.spring.springboot.entities.Niveau.*;
+import static tn.spring.springboot.entities.Niveau.EXPERT;
+import static tn.spring.springboot.entities.Niveau.SENIOR;
 
 @Service
 @AllArgsConstructor
@@ -77,56 +74,50 @@ public class EquipeServiceImpl implements IEquipeService{
     }
 
     @Override
-    public int faireEvoluerEquipes() {
+    public void faireEvoluerEquipes() {
         List<Equipe> equipes=equipeRepository.findAll();
         List<Equipe> equipesJS=new ArrayList<Equipe>();
 
         for (Equipe e: equipes
              ) {
-            if (e.getNiveau().equals(JUNIOR)||e.getNiveau().equals(SENIOR)){
+            if (e.getNiveau().equals("JUNIOR")||e.getNiveau().equals("SENIOR")){
                 equipesJS.add(e);
             }
 
         }
-        int nbEtudiantValide=0;
-
         for (Equipe e: equipesJS){
+            int nbEtudiantValide=0;
+            //vérifier les contraintes de changement
             if (e.getEtudiant().size()>=3){
                 boolean etudiantValide=false;
                 for (Etudiant etudiant: e.getEtudiant()) {
                     //list des contrats d'un etudiant
-                    Set<Contrat> contrats =  etudiant.getContrat();
+                    List<Contrat> contrats = (List<Contrat>) etudiant.getContrat();
                     for (Contrat c: contrats){
-                        Date todayDate = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-                        if ((todayDate.getTime()>c.getDateFinContrat().getTime())){
+                        if ((c.getDateFinContrat().getTime()-c.getDateDebutContrat().getTime())/(1000*60*60*24*365)>1){
                          etudiantValide=true;
 
                         }
-                        if (etudiantValide==true){
-                            nbEtudiantValide=nbEtudiantValide+1;
 
-                        }
+                    }
+                    if (etudiantValide==true){
+                        nbEtudiantValide=nbEtudiantValide+1;
+
                     }
                 }
+                //evoluerEqiupe
+                if (e.getEtudiant().size()==nbEtudiantValide){
+                    switch (e.getNiveau()){
+                        case JUNIOR:e.setNiveau(SENIOR);
+                            equipeRepository.save(e);
+                            break;
+                        case SENIOR:e.setNiveau(EXPERT);
+                            equipeRepository.save(e);
+                    }
                 }
-            //evoluerEqiupe
-            /*
-            if (e.getEtudiant().size()<=nbEtudiantValide){
-                switch (e.getNiveau()){
-                    case JUNIOR:e.setNiveau(SENIOR);
-                    equipeRepository.save(e);
-                    break;
-                    case SENIOR:e.setNiveau(EXPERT);
-                    equipeRepository.save(e);
-                    break;
-                }
+
             }
-
-             */
         }
-        return nbEtudiantValide;
-
 
 
     }
