@@ -123,7 +123,7 @@ public class ContratImpl implements IContrat {
 
 
 
-            if ( (todayDate.getTime()-c.getDateFinContrat().getTime())/(1000*60*60*24) <15 && (c.getDateFinContrat().getTime()-todayDate.getTime())/(1000*60*60*24) >0){
+            if ( (c.getDateFinContrat().getTime()-todayDate.getTime())/(1000*60*60*24) <15 && (c.getDateFinContrat().getTime()-todayDate.getTime())/(1000*60*60*24) >0){
 
                 contratsToRenew.add(c);
                 c.setArchive(true);

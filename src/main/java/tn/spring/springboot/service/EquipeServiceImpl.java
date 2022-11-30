@@ -2,6 +2,7 @@ package tn.spring.springboot.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import tn.spring.springboot.entities.Contrat;
 import tn.spring.springboot.entities.Equipe;
@@ -10,11 +11,12 @@ import tn.spring.springboot.entities.Niveau;
 import tn.spring.springboot.repository.EquipeRepository;
 import tn.spring.springboot.repository.EtudiantRepository;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
-import static tn.spring.springboot.entities.Niveau.EXPERT;
-import static tn.spring.springboot.entities.Niveau.SENIOR;
+import static tn.spring.springboot.entities.Niveau.*;
 
 @Service
 @AllArgsConstructor
@@ -74,14 +76,19 @@ public class EquipeServiceImpl implements IEquipeService{
     }
 
     @Override
+    @Scheduled(cron = "* * * * * *")
     public void faireEvoluerEquipes() {
         List<Equipe> equipes=equipeRepository.findAll();
         List<Equipe> equipesJS=new ArrayList<Equipe>();
-
+        List<Integer> nbrs=new ArrayList<Integer>();
+//récupérer les équipes junior et senior
         for (Equipe e: equipes
              ) {
-            if (e.getNiveau().equals("JUNIOR")||e.getNiveau().equals("SENIOR")){
+
+            if (e.getNiveau().equals(JUNIOR)||e.getNiveau().equals(SENIOR)){
                 equipesJS.add(e);
+                nbrs.add(1);
+
             }
 
         }
@@ -89,11 +96,13 @@ public class EquipeServiceImpl implements IEquipeService{
             int nbEtudiantValide=0;
             //vérifier les contraintes de changement
             if (e.getEtudiant().size()>=3){
-                boolean etudiantValide=false;
                 for (Etudiant etudiant: e.getEtudiant()) {
+                    boolean etudiantValide=false;
+
                     //list des contrats d'un etudiant
-                    List<Contrat> contrats = (List<Contrat>) etudiant.getContrat();
+                    Set<Contrat> contrats = etudiant.getContrat();
                     for (Contrat c: contrats){
+
                         if ((c.getDateFinContrat().getTime()-c.getDateDebutContrat().getTime())/(1000*60*60*24*365)>1){
                          etudiantValide=true;
 
@@ -102,6 +111,7 @@ public class EquipeServiceImpl implements IEquipeService{
                     }
                     if (etudiantValide==true){
                         nbEtudiantValide=nbEtudiantValide+1;
+
 
                     }
                 }
